@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, View } from 'react-native'
 
-const HomeScreen = ({ navigation }) => {
+const DetailsScreen = ({ navigation }) => {
   return (
     <View>
       <Button title='SEARCH_PAGE' onPress={() => navigation.navigate('Search')} />
@@ -9,4 +9,4 @@ const HomeScreen = ({ navigation }) => {
   )
 }
 
-export default HomeScreen
+export default DetailsScreen
