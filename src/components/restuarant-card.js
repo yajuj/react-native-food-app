@@ -1,9 +1,13 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/core';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const RestuarantCard = ({ name, image_url, rating, review_count, navigation }) => {
+const RestuarantCard = ({ name, image_url, rating, review_count, id }) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate('Details', { id, name })}
       style={styles.cardContainer}
     >
       <Image style={styles.restuarantImg} source={{

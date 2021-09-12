@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 const SearchBar = ({ search, onSearchTextChange, onSearchSubmit }) => {
   return (
