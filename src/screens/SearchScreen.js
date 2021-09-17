@@ -1,66 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
-import RestuarantsList from '../components/restaurant-list';
-import SearchBar from '../components/search-bar';
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text } from "react-native";
+import RestaurantList from "../components/restaurant-list";
+import SearchBar from "../components/search-bar";
 
 const SearchScreen = () => {
-  const [search, setSearch] = useState('');
-  const [restuarants, setRestuarants] = useState([])
-  const [errorMessage, setErrorMessage] = useState('')
+  const [search, setSearch] = useState("");
+  const [restaurants, setRestaurants] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const fetchRestuarants = async () => {
+  const fetchRestaurant = async () => {
     try {
-      const data = await fetch(`https://api.yelp.com/v3/businesses/search?term=${search}&location=new york&limit=50`, {
-        headers: {
-          Authorization: 'Bearer HShscMhDrQqiCRBu4fRhEjnFaMeInIcRf4aKW1DBHuG-IkQuZ4d1HzWAoHrl2jjU1yTYFvGtu5dX3itrRiehzwwBOWkqaYAWkuq9iQDKksQRLdhdq2Xt1S9oLNE8YXYx'
+      const data = await fetch(
+        `https://api.yelp.com/v3/businesses/search?term=${search}&location=new york&limit=50`,
+        {
+          headers: {
+            Authorization:
+              "Bearer authKey",
+          },
         }
-      })
-      const { businesses } = await data.json()
-      setRestuarants(businesses)
-
+      );
+      const { businesses } = await data.json();
+      setRestaurants(businesses);
     } catch (error) {
-      setErrorMessage('An error was occured');
+      setErrorMessage("An error was occured");
     }
-  }
+  };
 
-  const filterByPrice = priceD => {
-    return restuarants.filter(({ price }) => String(price).length === priceD)
-  }
+  const filterByPrice = (priceD) => {
+    return restaurants.filter(({ price }) => String(price).length === priceD);
+  };
 
   useEffect(() => {
-    if (!restuarants.length) {
-      fetchRestuarants()
+    if (!restaurants.length) {
+      fetchRestaurant();
     }
-  }, [])
-
+  }, []);
 
   return (
     <>
       <SearchBar
         search={search}
-        onSearchTextChange={value => setSearch(value)}
-        onSearchSubmit={fetchRestuarants}
+        onSearchTextChange={(value) => setSearch(value)}
+        onSearchSubmit={fetchRestaurant}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       <ScrollView>
-        <RestuarantsList
-          title='Cheap'
-          restuarants={filterByPrice(1)} />
-        <RestuarantsList
-          title='Advantageous'
-          restuarants={filterByPrice(2)} />
-        <RestuarantsList
-          title='Costly'
-          restuarants={filterByPrice(3)} />
+        <RestaurantList title="Cheap" restaurants={filterByPrice(1)} />
+        <RestaurantList title="Advantageous" restaurants={filterByPrice(2)} />
+        <RestaurantList title="Costly" restaurants={filterByPrice(3)} />
       </ScrollView>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
-})
+    flex: 1,
+  },
+});
 
-export default SearchScreen
+export default SearchScreen;
